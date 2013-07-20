@@ -63,7 +63,8 @@ def get_non_zero_currencies():
 
 # src_currencies dict of CUR -> amt available
 def do_trades(src_currencies):
-    for (currency, coins_available) in src_currencies:
+    print src_currencies
+    for (currency, coins_available) in src_currencies.iteritems():
         # get target price
         target = api.GetBuyPrice(currency, dest_currency) * multiplier
 
@@ -82,4 +83,4 @@ while True:
     non_zero_currencies = get_non_zero_currencies()
     do_trades(non_zero_currencies)
     logging.info("Sleeping for 600 seconds ...")
-    t.sleep(600) # Sleep for 10 minutes
+    t.sleep(180) # Sleep for 3 minutes
