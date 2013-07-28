@@ -87,10 +87,12 @@ setup_logging()
 while True:
     non_zero_currencies = get_non_zero_currencies()
 
-    if non_zero_currencies:
-        do_trades(non_zero_currencies)
-    else:
+    if non_zero_currencies is None:
         logging.info("Unable to get available balances")
+    elif len(non_zero_currencies) == 0:
+        logging.info("All balances == 0, doing no trading")
+    else:
+        do_trades(non_zero_currencies)
 
     logging.info("Sleeping for 180 seconds ...")
     t.sleep(180) # Sleep for 3 minutes
