@@ -55,6 +55,11 @@ def setup_logging():
 
 def get_non_zero_currencies():
     balances = api.GetAvailableBalances()
+
+    if not balances.has_key("return") or not balances["return"].has_key("balances_available"):
+        logging.info("balances object doesn't have return/balances_available: " + str(balances))
+        return None
+
     balances_available = balances["return"]["balances_available"] #CUR -> amt
     non_zero_currencies = {cur: float(coin_amt) for (cur, coin_amt) in balances_available.iteritems() if
                            float(coin_amt) > 0 and cur not in non_traded_currencies}
@@ -81,6 +86,11 @@ def do_trades(src_currencies):
 setup_logging()
 while True:
     non_zero_currencies = get_non_zero_currencies()
-    do_trades(non_zero_currencies)
-    logging.info("Sleeping for 600 seconds ...")
+
+    if non_zero_currencies:
+        do_trades(non_zero_currencies)
+    else:
+        logging.info("Unable to get available balances")
+
+    logging.info("Sleeping for 180 seconds ...")
     t.sleep(180) # Sleep for 3 minutes
