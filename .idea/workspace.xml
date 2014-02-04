@@ -28,8 +28,10 @@
       <file leaf-file-name="PyCryptsy.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PyCryptsy.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="111" column="23" selection-start="4171" selection-end="4171" vertical-scroll-proportion="0.8628945" vertical-offset="1133" max-vertical-offset="2052">
-              <folding />
+            <state line="115" column="8" selection-start="4278" selection-end="4278" vertical-scroll-proportion="0.43090317" vertical-offset="1674" max-vertical-offset="2628">
+              <folding>
+                <element signature="e#1163#1174#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -164,8 +166,10 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/PyCryptsy.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="111" column="23" selection-start="4171" selection-end="4171" vertical-scroll-proportion="0.8628945" vertical-offset="1133" max-vertical-offset="2052">
-          <folding />
+        <state line="115" column="8" selection-start="4278" selection-end="4278" vertical-scroll-proportion="0.43090317" vertical-offset="1674" max-vertical-offset="2628">
+          <folding>
+            <element signature="e#1163#1174#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

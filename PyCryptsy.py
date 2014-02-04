@@ -110,3 +110,31 @@ class PyCryptsy:
                                "price": price})
         except:
             return None
+
+  # get current open sell and buy orders for market listing
+  def GetMyOrders (self, src, dest):
+    try:
+      return self.Query("myorders", {"marketid": self.GetMarketID(src, dst)})
+    except:
+      return None
+
+  # cancel market orders for specified market listing
+  def CancelMarketOrders(self, src, dst):
+    try:
+      return self.Query("cancelmarketorders", {"marketid": self.GetMarketID(src, dest)})
+    except:
+      return None
+
+  # cancel specific order id
+  def CancelOrder(self, orderid):
+    try:
+      return self.Query("cancelmarketorders", {"orderid": orderid}))
+    except:
+      return None
+
+  # cancel all open orders
+  def CancelAllOrders (self):
+    try:
+      return self.Query("cancelallorders")
+    except:
+      return None
