@@ -2,7 +2,7 @@
 
 # PyCryptsy: a Python binding to the Cryptsy API
 #
-# Copyright Â© 2013 Scott Alfter
+# Copyright © 2013 Scott Alfter
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
