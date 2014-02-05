@@ -119,7 +119,7 @@ class PyCryptsy:
       return None
 
   # cancel market orders for specified market listing
-  def CancelMarketOrders(self, src, dst):
+  def CancelMarketOrders(self, src, dest):
     try:
       return self.Query("cancelmarketorders", {"marketid": self.GetMarketID(src, dest)})
     except:
