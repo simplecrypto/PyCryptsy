@@ -29,6 +29,7 @@ import urllib
 import requests
 
 class PyCryptsy:
+<<<<<<< HEAD
     # constructor (Key: API public key, Secret: API private key)
     def __init__(self, Key, Secret):
         self.key = Key
@@ -40,7 +41,7 @@ class PyCryptsy:
         req["nonce"] = int(time.time())
         sign = hmac.new(self.secret, urllib.urlencode(req), hashlib.sha512).hexdigest()
         headers = {"Sign": sign, "Key": self.key}
-        r = requests.post("https://www.cryptsy.com/api", data=req, params=req, headers=headers)
+        r = requests.post("https://api.cryptsy.com/api", data=req, params=req, headers=headers)
         r.raise_for_status() # raise exception if any HTTP 4XX or 5XX
         return r.json()
 
