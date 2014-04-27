@@ -15,7 +15,7 @@ setup(
     url='https://github.com/salfter/PyCryptsy',
     py_modules=['PyCryptsy'],
     zip_safe=False,
-    install_requires=["pycurl"],
+    install_requires=["requests"],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',

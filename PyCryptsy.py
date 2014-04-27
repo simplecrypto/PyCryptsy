@@ -28,12 +28,12 @@ import hashlib
 import urllib
 import requests
 
+
 class PyCryptsy:
-<<<<<<< HEAD
     # constructor (Key: API public key, Secret: API private key)
-    def __init__(self, Key, Secret):
-        self.key = Key
-        self.secret = Secret
+    def __init__(self, key, secret):
+        self.key = key
+        self.secret = secret
 
     # issue any supported query (method: string, req: dictionary with method parameters)
     def Query(self, method, req):
@@ -42,24 +42,25 @@ class PyCryptsy:
         sign = hmac.new(self.secret, urllib.urlencode(req), hashlib.sha512).hexdigest()
         headers = {"Sign": sign, "Key": self.key}
         r = requests.post("https://api.cryptsy.com/api", data=req, params=req, headers=headers)
-        r.raise_for_status() # raise exception if any HTTP 4XX or 5XX
+        r.raise_for_status()  # raise exception if any HTTP 4XX or 5XX
         return r.json()
 
     # get market ID (return None if not found)
-    def GetMarketID(self, src, dest):
+    def get_market_id(self, src, dest):
         try:
             r = self.Query("getmarkets", {})
+            mkt_id = None
             for i, market in enumerate(r["return"]):
-                if market["primary_currency_code"].upper() == src.upper() and market[
-                    "secondary_currency_code"].upper() == dest.upper():
+                if market["primary_currency_code"].upper() == src.upper() and \
+                        market["secondary_currency_code"].upper() == dest.upper():
                     mkt_id = market["marketid"]
             return mkt_id
         except:
             return None
 
     # get buy price for a currency pair
-    def GetBuyPrice(self, src, dest):
-        mktid = self.GetMarketID(src, dest)
+    def get_buy_price(self, src, dest):
+        mktid = self.get_market_id(src, dest)
         if mktid is None:
             return 0
         try:
@@ -69,8 +70,8 @@ class PyCryptsy:
             return 0
 
     # get sell price for a currency pair
-    def GetSellPrice(self, src, dest):
-        mktid = self.GetMarketID(src, dest)
+    def get_sell_price(self, src, dest):
+        mktid = self.get_market_id(src, dest)
         if mktid is None:
             return 0
         try:
@@ -80,14 +81,14 @@ class PyCryptsy:
             return 0
 
     # get available balance for a currency
-    def GetAvailableBalance(self, curr):
+    def get_available_balance(self, curr):
         try:
             r = self.Query("getinfo", {})
             return float(r["return"]["balances_available"][curr.upper()])
         except:
             return 0
 
-    def GetAvailableBalances(self):
+    def get_available_balances(self):
         try:
             r = self.Query("getinfo", {})
             return r
@@ -95,47 +96,47 @@ class PyCryptsy:
             return 0
 
     # create a sell order
-    def CreateSellOrder(self, src, dest, qty, price):
+    def create_sell_order(self, src, dest, qty, price):
         try:
             return self.Query("createorder",
-                              {"marketid": self.GetMarketID(src, dest), "ordertype": "Sell", "quantity": qty,
+                              {"marketid": self.get_market_id(src, dest), "ordertype": "Sell", "quantity": qty,
                                "price": price})
         except:
             return None
 
     # create a buy order
-    def CreateBuyOrder(self, src, dest, qty, price):
+    def create_buy_order(self, src, dest, qty, price):
         try:
             return self.Query("createorder",
-                              {"marketid": self.GetMarketID(src, dest), "ordertype": "Buy", "quantity": qty,
+                              {"marketid": self.get_market_id(src, dest), "ordertype": "Buy", "quantity": qty,
                                "price": price})
         except:
             return None
 
-  # get current open sell and buy orders for market listing
-  def GetMyOrders (self, src, dest):
-    try:
-      return self.Query("myorders", {"marketid": self.GetMarketID(src, dst)})
-    except:
-      return None
+    # get current open sell and buy orders for market listing
+    def get_my_orders(self, src, dest):
+        try:
+            return self.Query("myorders", {"marketid": self.get_market_id(src, dest)})
+        except:
+            return None
 
-  # cancel market orders for specified market listing
-  def CancelMarketOrders(self, src, dest):
-    try:
-      return self.Query("cancelmarketorders", {"marketid": self.GetMarketID(src, dest)})
-    except:
-      return None
+    # cancel market orders for specified market listing
+    def cancel_market_orders(self, src, dest):
+        try:
+            return self.Query("cancelmarketorders", {"marketid": self.get_market_id(src, dest)})
+        except:
+            return None
 
-  # cancel specific order id
-  def CancelOrder(self, orderid):
-    try:
-      return self.Query("cancelmarketorders", {"orderid": orderid}))
-    except:
-      return None
+    # cancel specific order id
+    def cancel_order(self, orderid):
+        try:
+            return self.Query("cancelmarketorders", {"orderid": orderid})
+        except:
+            return None
 
-  # cancel all open orders
-  def CancelAllOrders (self):
-    try:
-      return self.Query("cancelallorders")
-    except:
-      return None
+    # cancel all open orders
+    def cancel_all_orders(self):
+        try:
+            return self.Query("cancelallorders")
+        except:
+            return None

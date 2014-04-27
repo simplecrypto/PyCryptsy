@@ -53,8 +53,9 @@ def setup_logging():
     console.setLevel(logging.INFO)
     logging.getLogger('').addHandler(console)
 
+
 def get_non_zero_currencies():
-    balances = api.GetAvailableBalances()
+    balances = api.get_available_balances()
 
     if not balances.has_key("return") or not balances["return"].has_key("balances_available"):
         logging.info("balances object doesn't have return/balances_available: " + str(balances))
@@ -63,22 +64,23 @@ def get_non_zero_currencies():
     balances_available = balances["return"]["balances_available"] #CUR -> amt
     non_zero_currencies = {cur: float(coin_amt) for (cur, coin_amt) in balances_available.iteritems() if
                            float(coin_amt) > 0 and cur not in non_traded_currencies}
-    # print non_zero_currencies
+
     return non_zero_currencies
+
 
 # src_currencies dict of CUR -> amt available
 def do_trades(src_currencies):
     print src_currencies
     for (currency, coins_available) in src_currencies.iteritems():
         # get target price
-        target = api.GetBuyPrice(currency, dest_currency) * multiplier
+        target = api.get_buy_price(currency, dest_currency) * multiplier
 
         logging.info("Target: %s, Avail: %s" % (target, coins_available))
         if coins_available > 0:
             units_to_sell = coins_available * percent_to_sell
             logging.info(
                 "Creating sell order from %s to %s, units: %d, target price: %d" % (currency, dest_currency, units_to_sell, target))
-            result = api.CreateSellOrder(currency, dest_currency, units_to_sell, target)
+            result = api.create_sell_order(currency, dest_currency, units_to_sell, target)
             # {u'orderid': u'532446', u'moreinfo': u'Your Sell order has been placed for<br><b>353.81173381 NRB @ 0.00016990 BTC</b> each.<br>Order ID: <b>532446</b>', u'success': u'1'}
             logging.info("Result: OrderId: %s, Info: %s, Success: %s" % (result['orderid'], result['moreinfo'], result['success']))
 
