@@ -58,6 +58,18 @@ class PyCryptsy:
         except:
             return None
 
+    # get all active BTC market IDs (return None if not found)
+    def get_all_market_ids(self):
+        try:
+            r = self.Query("getmarkets", {})
+            mkt_id = []
+            for market in r["return"]:
+                if market["secondary_currency_code"].upper() == 'BTC':
+                    mkt_id.push(market["marketid"])
+            return mkt_id
+        except:
+            return None
+
     # get buy price for a currency pair
     def get_buy_price(self, src, dest):
         mktid = self.get_market_id(src, dest)
