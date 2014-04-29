@@ -140,3 +140,10 @@ class PyCryptsy:
             return self.Query("cancelallorders")
         except:
             return None
+
+    # get trades for a specific market
+    def get_market_trades(self, src, dest):
+        try:
+            return self.Query("markettrades", {"marketid": self.get_market_id(src, dest)})
+        except:
+            return None
